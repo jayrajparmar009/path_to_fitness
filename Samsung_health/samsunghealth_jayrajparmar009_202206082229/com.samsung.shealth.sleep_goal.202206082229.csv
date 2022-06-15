@@ -1,0 +1,4 @@
+com.samsung.shealth.sleep_goal,6212007,3
+update_time,create_time,sleep_time,wake_up_time,deviceuuid,pkg_name,bed_time,set_time,datauuid
+2021-04-04 07:10:47.990,2021-04-04 07:10:47.990,-59400000,21600000,im26HRLwRA,com.sec.android.app.clockpackage,81000000,1617520247972,44bed752-80f6-4bb9-bfa1-a30954c60efb,
+2021-04-05 04:31:39.854,2021-04-05 04:31:39.854,-57600000,23400000,im26HRLwRA,com.sec.android.app.clockpackage,81000000,1617597099846,0d621492-e078-40ed-b272-9f810fca7387,

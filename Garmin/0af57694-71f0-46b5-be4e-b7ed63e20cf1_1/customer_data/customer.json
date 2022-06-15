@@ -1,0 +1,38 @@
+{
+  "id" : null,
+  "firstName" : "Jayraj",
+  "middleName" : null,
+  "lastName" : null,
+  "fullName" : "Jayraj",
+  "namePrefix" : null,
+  "nameSuffix" : null,
+  "gender" : null,
+  "displayName" : null,
+  "username" : "JAYRAJPARMAR009@GMAIL.COM",
+  "primaryAddress" : null,
+  "primaryEmailAddress" : {
+    "emailAddress" : "jayrajparmar009@gmail.com",
+    "type" : null,
+    "primary" : true,
+    "emailVerified" : false,
+    "emailVerificationTimestamp" : null,
+    "emailAddressId" : null
+  },
+  "primaryPhoneNumber" : null,
+  "locale" : "en",
+  "type" : null,
+  "active" : true,
+  "version" : 15,
+  "lastUpdateDateTime" : "2022-06-06T04:02:53Z",
+  "createdDate" : "2019-12-02T10:44:44Z",
+  "customerLocation" : {
+    "countryCode" : "CA",
+    "verified" : true,
+    "verifiedTimestamp" : "2020-01-04T05:42:38Z"
+  },
+  "addresses" : [ ],
+  "emailAddresses" : [ ],
+  "phoneNumbers" : [ ],
+  "foreignIdentifiers" : [ ],
+  "loginInfo" : null
+}

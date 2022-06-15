@@ -10,9 +10,6 @@ os.chdir('/Users/jayrajparmar/Documents/side_project/health_data_tracking')
 import basic_methods as bm
 
 
-import matplotlib.pyplot as plt
-
-
 
 def data_read(path):
     return pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_tracking/Weight_data/Measurement Data.csv')
