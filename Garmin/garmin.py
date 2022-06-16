@@ -1,5 +1,6 @@
 import json
 import pandas as pd
+import numpy as np
 import os
 from datetime import date, timedelta, datetime
 os.chdir('/Users/jayrajparmar/Documents/side_project/health_data_tracking')
@@ -57,6 +58,16 @@ def final_df_manipulation(df_garmin_exec):
                                          'bmrCalories','calories','waterEstimated']]
 
     df_garmin_imp_cols['date'] = pd.to_datetime(df_garmin_imp_cols['date'], errors='coerce')
+    d = {
+    'duration_minutes': np.sum,
+    'avgHr': np.mean,
+    'maxHr': np.max,
+    'bmrCalories': np.sum,
+    'calories': np.sum,
+    'waterEstimated': np.sum
+    }
+
+    df_garmin_imp_cols = df_garmin_imp_cols.groupby('date').agg(d).reset_index()
     date_range = date_range_generator((date(2019,1,1)),(datetime.today().date()))
     final_df = date_range.merge(df_garmin_imp_cols, how='left', left_on='date_range', right_on='date')
     return final_df
