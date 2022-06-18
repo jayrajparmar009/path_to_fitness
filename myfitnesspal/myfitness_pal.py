@@ -5,16 +5,19 @@ import pandas as pd
 import os
 import numpy as np
 
+import sys
+sys.path.insert(1,  os.path.abspath('..'))
 
 import basic_methods as bm
 
 
 
 def data_read(path, typ):
+    print(os.getcwd())
     if typ == 'ex':
-        return pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_tracking/myfitnesspal/File-Export-2017-09-22-to-2022-06-01/Exercise-Summary-2017-09-22-to-2022-06-01.csv')
+        return pd.read_csv(path)
     elif typ == 'nut':
-        return pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_tracking/myfitnesspal/File-Export-2017-09-22-to-2022-06-01/Nutrition-Summary-2017-09-22-to-2022-06-01.csv')
+        return pd.read_csv(path)
     else: 
         print("Invalid entry; please enter valid file path and name")
 
@@ -129,11 +132,13 @@ def date_range_generator(start_dt, end_dt):
 
 def final_df_prep(typ):
     if typ == 'ex':
-        df = data_read('/Users/jayrajparmar/Documents/side_project/health_data_tracking/myfitnesspal/File-Export-2017-09-22-to-2022-06-01/Exercise-Summary-2017-09-22-to-2022-06-01.csv', typ='ex')
+        df = data_read(os.path.join(os.path.dirname('myfitnesspal/File-Export-2017-09-22-to-2022-06-01'),
+                 'File-Export-2017-09-22-to-2022-06-01/Exercise-Summary-2017-09-22-to-2022-06-01.csv'), typ='ex')
         del df['Exercise']
         del df['Type']
     elif typ == 'nut':
-        df = data_read('/Users/jayrajparmar/Documents/side_project/health_data_tracking/myfitnesspal/File-Export-2017-09-22-to-2022-06-01/Nutrition-Summary-2017-09-22-to-2022-06-01.csv', typ='nut')
+        df = data_read(os.path.join(os.path.dirname('myfitnesspal/File-Export-2017-09-22-to-2022-06-01'),
+                'File-Export-2017-09-22-to-2022-06-01/Nutrition-Summary-2017-09-22-to-2022-06-01.csv'), typ='nut')
     else: 
         print("Error in file read")
     df_cleaned = data_prep(df, 'Date')

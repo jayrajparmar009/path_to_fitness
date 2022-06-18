@@ -3,13 +3,15 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import date, timedelta, datetime
-os.chdir('/Users/jayrajparmar/Documents/side_project/health_data_tracking')
+import sys
+sys.path.insert(1,  os.path.abspath('..'))
 import basic_methods as bm
 import time
 
 
 def df_read():
-    f = open('/Users/jayrajparmar/Documents/side_project/health_data_tracking/Garmin/jayrajparmar009@gmail.com_0_summarizedActivities.json', "r")
+    f = open(os.path.join(os.path.dirname('Garmin/garmin_summarized.json'), 
+                      'garmin_summarized.json'))
     data = json.loads(f.read())
     json_data = data[0]['summarizedActivitiesExport']
     lis = []

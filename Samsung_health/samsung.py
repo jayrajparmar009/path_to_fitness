@@ -4,7 +4,10 @@ import os
 from glob import glob
 import json
 from datetime import date, timedelta, datetime
+import sys
+sys.path.insert(1,  os.path.abspath('..'))
 
+import basic_methods as bm
 
 
 def date_range_generator(start_dt, end_dt):
@@ -22,11 +25,15 @@ def date_range_generator(start_dt, end_dt):
     return df
 
 def data_read():
-    path = '/Users/jayrajparmar/Documents/side_project/health_data_tracking/Samsung_health/samsunghealth_jayrajparmar009_202206082229'
-    samsung_dir = os.path.join(path)
-    os.chdir(path)
+    samsung_dir = os.path.join(os.path.dirname('Samsung_health/samsung_data'), 
+             'samsung_data')
+#     samsung_dir = os.path.join(path)
+#     print(path)
+#     print(samsung_dir)
     read_df = lambda x: pd.read_csv(x, skiprows=1, index_col=False)
-    dfs_steps = {i.replace('com.samsung.', ''): read_df(i) for i in os.listdir() if 'step' in i}
+#     print(os.getcwd())
+    dfs_steps = {i.replace('com.samsung.', ''): read_df(os.path.join(os.path.dirname('Samsung_health/samsung_data'),
+         "samsung_data/"+str(i))) for i in os.listdir(samsung_dir) if 'step' in i}
     steps_df = list(dfs_steps.values())[0]
     steps_refined = steps_df[['create_time','count','distance','calorie']]
     return steps_refined

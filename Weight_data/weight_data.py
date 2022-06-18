@@ -4,18 +4,24 @@ import os
 import requests
 import datetime
 from datetime import date, timedelta, datetime
-
-os.chdir('/Users/jayrajparmar/Documents/side_project/health_data_tracking')
+import sys
+sys.path.insert(1,  os.path.abspath('..'))
 
 import basic_methods as bm
 
 
 
+
+
+
+
+
 def data_read(path):
-    return pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_tracking/Weight_data/Measurement Data.csv')
+    """Function to read data by path
+    - path: Path of the file stored in the same folder
+    """
+    return pd.read_csv(path)
 
-
-# print(df_initial.dtypes)
 
 # Function to clean column names, convert date to datetime and delete Remarks field
 def data_prep(df,date_col):
@@ -112,7 +118,7 @@ def date_range_generator(start_dt, end_dt):
 
 
 def final_df_prep():
-    df_initial = data_read('/Users/jayrajparmar/Documents/side_project/health_data_tracking/Weight_data/Measurement Data.csv')
+    df_initial = data_read(os.path.join(os.path.dirname('Weight_data/Measurement Data.csv'), 'Measurement Data.csv'))
     df_test = data_prep(df_initial, 'Time_of_Measurement')
     df_int = date_numeric_groupby(df_test,'Time_of_Measurement')
     df_final_pre = null_imputation_rolling(df_int,'Time_of_Measurement')
@@ -122,10 +128,6 @@ def final_df_prep():
 
 
 
-
-# df_initial = pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_tracking/Weight_data/Measurement Data.csv')       df_test = data_prep(df_initial, 'Time_of_Measurement')
-# df_int = date_numeric_groupby(df_test,'Time_of_Measurement')
-# df_final = null_imputation_rolling(df_int,'Time_of_Measurement')
 
 
 
