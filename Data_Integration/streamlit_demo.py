@@ -42,10 +42,10 @@ def read_file(filename):
 
 # content = read_file("healthmarkers/final_df.csv")
 
-content = pd.read_csv("healthmarkers/final_df.csv")
+contents = pd.read_csv(content)
 
 
-st.dataframe(content)
+st.dataframe(contents)
 
 
 # df = final_df[(~final_df.Weightkg.isnull()) & (final_df.date_range > '2021-08-01')]
