@@ -31,24 +31,27 @@ import streamlit as st
 
 # Create connection object.
 # `anon=False` means not anonymous, i.e. it uses access keys to pull data.
-fs = s3fs.S3FileSystem(anon=False)
+# fs = s3fs.S3FileSystem(anon=False)
+
+content = pd.read_csv("s3://healthmarkers/final_df.csv",
+                   storage_options={"anon": False})
 
 # Retrieve file contents.
 # Uses st.experimental_memo to only rerun when the query changes or after 10 min.
-@st.experimental_memo(ttl=600)
-def read_file(filename):
-    with fs.open(filename) as f:
-        return f.read().decode("utf-8")
+# @st.experimental_memo(ttl=600)
+# def read_file(filename):
+#     with fs.open(filename) as f:
+#         return f.read().decode("utf-8")
 
-content = read_file("healthmarkers/final_df.csv")
+# content = read_file("healthmarkers/final_df.csv")
 
-# Print results.
-for line in content.strip().split("\n"):
-    name, pet = line.split(",")
-    st.write(f"{name} has a :{pet}:")
+# # Print results.
+# for line in content.strip().split("\n"):
+#     name, pet = line.split(",")
+#     st.write(f"{name} has a :{pet}:")
 
 
-st.dataframe(contents)
+st.dataframe(content)
 
 
 # df = final_df[(~final_df.Weightkg.isnull()) & (final_df.date_range > '2021-08-01')]
