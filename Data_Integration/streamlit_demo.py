@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-os.chdir('..')
+#os.chdir('..')
 # from Garmin import garmin as gm
 # from myfitnesspal import myfitness_pal as mf
 # from Weight_data import weight_data as wd
