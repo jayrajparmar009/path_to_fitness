@@ -42,7 +42,10 @@ def read_file(filename):
 
 content = read_file("healthmarkers/final_df.csv")
 
-contents = pd.read_csv(content)
+# Print results.
+for line in content.strip().split("\n"):
+    name, pet = line.split(",")
+    st.write(f"{name} has a :{pet}:")
 
 
 st.dataframe(contents)
