@@ -1,3 +1,4 @@
 # requirements
 
 s3fs==2022.5.0
+plotly==5.8.2
