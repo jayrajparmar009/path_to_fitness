@@ -40,7 +40,9 @@ def read_file(filename):
     with fs.open(filename) as f:
         return f.read().decode("utf-8")
 
-content = read_file("healthmarkers/final_df.csv")
+# content = read_file("healthmarkers/final_df.csv")
+
+content = pd.read_csv("healthmarkers/final_df.csv")
 
 
 st.dataframe(content)
