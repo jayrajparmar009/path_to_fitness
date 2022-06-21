@@ -33,7 +33,7 @@ import streamlit as st
 # `anon=False` means not anonymous, i.e. it uses access keys to pull data.
 # fs = s3fs.S3FileSystem(anon=False)
 
-content = pd.read_csv("s3://healthmarkers/final_df.csv",
+final_df = pd.read_csv("s3://healthmarkers/final_df.csv",
                    storage_options={"anon": False})
 
 # Retrieve file contents.
@@ -51,90 +51,90 @@ content = pd.read_csv("s3://healthmarkers/final_df.csv",
 #     st.write(f"{name} has a :{pet}:")
 
 
-st.dataframe(content)
+# st.dataframe(content)
 
 
-# df = final_df[(~final_df.Weightkg.isnull()) & (final_df.date_range > '2021-08-01')]
+df = final_df[(~final_df.Weightkg.isnull()) & (final_df.date_range > '2021-08-01')]
 
 
 
-# fig = go.Figure()
-# # Create and style traces
-# fig.add_trace(go.Scatter(x=df['date_range'], 
-#                          y=df['Weightkg'], name='Weight Trend',
-#                          line=dict(color='green', width=2)))
+fig = go.Figure()
+# Create and style traces
+fig.add_trace(go.Scatter(x=df['date_range'], 
+                         y=df['Weightkg'], name='Weight Trend',
+                         line=dict(color='green', width=2)))
 
-# fig.add_trace(go.Scatter(x=df['date_range'], 
-#                          y=df['Weightkg_rolling_7'], 
-#                          name='7 day Rolling Weight Average',
-#                          line=dict(color='royalblue', width=2)))
+fig.add_trace(go.Scatter(x=df['date_range'], 
+                         y=df['Weightkg_rolling_7'], 
+                         name='7 day Rolling Weight Average',
+                         line=dict(color='royalblue', width=2)))
 
-# fig.update_layout(
-#     width=1000,
-#     height=500,
-#     autosize=False,
-#     margin=dict(t=0, b=0, l=0, r=0),
-#     template="plotly_dark"
-# )
+fig.update_layout(
+    width=1000,
+    height=500,
+    autosize=False,
+    margin=dict(t=0, b=0, l=0, r=0),
+    template="plotly_dark"
+)
 
   
     
-# fig.update_layout(
-#     xaxis=dict(
-#         rangeselector=dict(
-#             buttons=list([
-#                 dict(count=7,
-#                      label="1w",
-#                      step="day",
-#                      stepmode="backward",
-#                     visible=True),
-#                 dict(count=14,
-#                      label="2w",
-#                      step="day",
-#                      stepmode="backward",
-#                     visible=True),
-#                 dict(count=1,
-#                      label="1m",
-#                      step="month",
-#                      stepmode="backward",
-#                     visible=True),
-#                 dict(count=6,
-#                      label="6m",
-#                      step="month",
-#                      stepmode="backward",
-#                     visible=True),
-#                 dict(count=1,
-#                      label="YTD",
-#                      step="year",
-#                      stepmode="todate",
-#                     visible=True),
-#                 dict(count=1,
-#                      label="1y",
-#                      step="year",
-#                      stepmode="backward",
-#                     visible=True),
-#                 dict(step="all")
-#             ])
+fig.update_layout(
+    xaxis=dict(
+        rangeselector=dict(
+            buttons=list([
+                dict(count=7,
+                     label="1w",
+                     step="day",
+                     stepmode="backward",
+                    visible=True),
+                dict(count=14,
+                     label="2w",
+                     step="day",
+                     stepmode="backward",
+                    visible=True),
+                dict(count=1,
+                     label="1m",
+                     step="month",
+                     stepmode="backward",
+                    visible=True),
+                dict(count=6,
+                     label="6m",
+                     step="month",
+                     stepmode="backward",
+                    visible=True),
+                dict(count=1,
+                     label="YTD",
+                     step="year",
+                     stepmode="todate",
+                    visible=True),
+                dict(count=1,
+                     label="1y",
+                     step="year",
+                     stepmode="backward",
+                    visible=True),
+                dict(step="all")
+            ])
  
-#         ),
-#         rangeslider=dict(
-#             visible=True,
-#             bgcolor= 'darkred'
-#         ),
+        ),
+        rangeslider=dict(
+            visible=True,
+            bgcolor= 'darkred'
+        ),
         
-#         type="date"
-#     ),
-# template="plotly_dark",
-# xaxis_rangeselector_font_color='black',
-# xaxis_rangeselector_activecolor='red',
-# xaxis_rangeselector_bgcolor='green',
-# )
-# fig.update_xaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
-# fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
+        type="date"
+    ),
+template="plotly_dark",
+xaxis_rangeselector_font_color='black',
+xaxis_rangeselector_activecolor='red',
+xaxis_rangeselector_bgcolor='green',
+)
+fig.update_xaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
+fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
 
 
 
-# st.plotly_chart(fig)
+st.plotly_chart(fig)
 
 
 
