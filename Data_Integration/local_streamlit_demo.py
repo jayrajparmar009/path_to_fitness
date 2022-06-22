@@ -1,17 +1,52 @@
+# Packages and dependencies
 import pandas as pd
 import numpy as np
 import os
-import s3fs
+# print(os.getcwd())
+# # print(pip list)
+# os.chdir('..')
+# print(os.getcwd())
+
+# from pip import _internal
+# _internal.main(['list'])
+# print(pip list)
+# from Garmin import garmin as gm
+# from myfitnesspal import myfitness_pal as mf
+# from Weight_data import weight_data as wd
+# from Samsung_health import samsung as sm
+
+
 import plotly.express as px
 import plotly.graph_objects as go
+
+
 import streamlit as st
 
-# Reading data file directly from Amazon AWS S3
-final_df = pd.read_csv("s3://healthmarkers/final_df.csv",
-                   storage_options={"anon": False})
+
+# Data building
+
+# garmin_df = gm.final_df_prep()
+# mfp_exec = mf.final_df_prep(typ='ex')
+# mfp_nut = mf.final_df_prep(typ='nut')
+# weight_df = wd.final_df_prep()
+# steps_df = sm.final_df_prep()
+
+# steps_df['date_range'] = pd.to_datetime(steps_df['date_range'], errors='coerce')
+
+# final_df = weight_df.merge(garmin_df, how='left', on='date_range').merge(steps_df, 
+#                 how='left', on='date_range').merge(mfp_nut, how='left', on='date_range')
 
 
-# Filtering file for desired date range
+# reading dataframe
+
+
+final_df = pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_tracking/final_df.csv')
+
+# # Plotly Charts
+
+# st.title("Health Marker tracker")
+
+
 df = final_df[(~final_df.Weightkg.isnull()) & (final_df.date_range > '2021-08-01')]
 
 
@@ -92,6 +127,7 @@ fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black',
 
 
 
+
 # Creating a metrics dataframe to have metrics cards for weekly difference in averages
 metrics = df.tail(14)
 
@@ -124,8 +160,9 @@ col4.metric(label="BMR (KCAL)",
 
 
 
-
 st.plotly_chart(fig)
+
+
 
 
 
