@@ -132,6 +132,27 @@ fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black',
 metrics = df.tail(14)
 
 
+fig1 = go.Figure()
+
+
+fig1.add_trace(go.Indicator(
+    value = metrics['count'].tail(7).mean(),
+    delta = {'reference': 6000},
+    gauge = {
+        'axis': {'visible': True}},
+    domain = {'row': 0, 'column': 0}))
+
+
+fig1.update_layout(
+    grid = {'rows': 1, 'columns': 1, 'pattern': "independent"},
+    template = {'data' : {'indicator': [{
+        'title': {'text': "Weekly Average Steps"},
+        'mode' : "number+delta+gauge",
+        'delta' : {'reference': 90}}]
+                         }})
+
+
+
 # Title
 st.title("Healthmarker Tracker")
 
@@ -158,8 +179,9 @@ col4.metric(label="BMR (KCAL)",
             delta=round(metrics.tail(7)['BMRkcal'].mean() - metrics.head(7)['BMRkcal'].mean(),2))
 
 
-
-
+st.subheader("Metrics card testing features")
+st.plotly_chart(fig1)
+st.subheader("Trend on Weight data")
 st.plotly_chart(fig)
 
 
