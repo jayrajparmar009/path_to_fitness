@@ -50,17 +50,87 @@ final_df = pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_t
 df = final_df[(~final_df.Weightkg.isnull()) & (final_df.date_range > '2021-08-01')]
 
 
+# df = df.set_index('date_range')
+df_linechart = df[['date_range',
+                   'Weightkg','Weightkg_rolling_7',
+                   'BMI','BMI_rolling_7',
+                   'Body_Fat%','Body_Fat%_rolling_7',
+                   'Fat-free_Body_Weightkg','Fat-free_Body_Weightkg_rolling_7',
+                   'Subcutaneous_Fat%','Subcutaneous_Fat%_rolling_7',
+                   'Visceral_Fat','Visceral_Fat_rolling_7', 
+                   'Body_Water%','Body_Water%_rolling_7',
+                   'Skeletal_Muscle%','Skeletal_Muscle%_rolling_7',
+                   'Muscle_Masskg','Muscle_Masskg_rolling_7',
+                   'Bone_Masskg','Bone_Masskg_rolling_7',
+                   'Protein%','Protein%_rolling_7',
+                   'BMRkcal','BMRkcal_rolling_7',
+                   'Metabolic_Age','Metabolic_Age_rolling_7']]
 
-fig = go.Figure()
-# Create and style traces
-fig.add_trace(go.Scatter(x=df['date_range'], 
-                         y=df['Weightkg'], name='Weight Trend',
-                         line=dict(color='green', width=2)))
 
-fig.add_trace(go.Scatter(x=df['date_range'], 
-                         y=df['Weightkg_rolling_7'], 
-                         name='7 day Rolling Weight Average',
-                         line=dict(color='royalblue', width=2)))
+maps = {
+        'Weightkg': ['Weightkg','Weightkg_rolling_7'],
+        'BMI':['BMI','BMI_rolling_7'],
+        'BodyFat': ['Body_Fat%','Body_Fat%_rolling_7'],
+        'FatFree_BodyWeight':['Fat-free_Body_Weightkg','Fat-free_Body_Weightkg_rolling_7'],
+        'Subcutaneous_Fat%':['Subcutaneous_Fat%','Subcutaneous_Fat%_rolling_7'],
+        'VisceralFat':['Visceral_Fat','Visceral_Fat_rolling_7'],
+        'BodyWater%':['Body_Water%','Body_Water%_rolling_7'],
+        'SkeletalMuscle%':['Skeletal_Muscle%','Skeletal_Muscle%_rolling_7'],
+        'MuscleMassKg':['Muscle_Masskg','Muscle_Masskg_rolling_7'],
+        'BoneMassKg':['Bone_Masskg','Bone_Masskg_rolling_7'],
+        'Protien%':['Protein%','Protein%_rolling_7'],
+        'BMRKcal':['BMRkcal','BMRkcal_rolling_7'],
+        'Metabolic_Age':['Metabolic_Age','Metabolic_Age_rolling_7']
+       
+       }
+
+
+# plotly figure
+fig = px.line(df_linechart, x=df_linechart.date_range, y = df_linechart.columns[1:]) 
+
+# groups and trace visibilities
+group = []
+vis = []
+visList = []
+for m in maps.keys():
+    for col in df_linechart.columns[1:]:
+        if col in maps[m]:
+            vis.append(True)
+        else:
+            vis.append(False)
+    group.append(m)
+    visList.append(vis)
+    vis = []
+    
+    
+
+# buttons for each group
+buttons = []
+for i, g in enumerate(group):
+    button =  dict(label=g,
+                   method = 'restyle',
+                    args = ['visible',visList[i]])
+    buttons.append(button)
+
+buttons = [{'label': 'all',
+                 'method': 'restyle',
+                 'args': ['visible', [True, True, True, True, True, True]]}] + buttons
+
+
+
+# update layout with buttons                       
+fig.update_layout(
+    updatemenus=[
+        dict(
+        type="dropdown",
+        direction="down",
+        buttons = buttons,
+        bgcolor='white',
+        font={'color':'black'},
+        borderwidth=2,
+        bordercolor='Grey')
+    ],
+)
 
 fig.update_layout(
     width=1000,
@@ -128,6 +198,87 @@ fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black',
 
 
 
+
+
+# buttons
+# fig.show()
+# fig = go.Figure()
+# # Create and style traces
+# fig.add_trace(go.Scatter(x=df['date_range'], 
+#                          y=df['Weightkg'], name='Weight Trend',
+#                          line=dict(color='green', width=2)))
+
+# fig.add_trace(go.Scatter(x=df['date_range'], 
+#                          y=df['Weightkg_rolling_7'], 
+#                          name='7 day Rolling Weight Average',
+#                          line=dict(color='royalblue', width=2)))
+
+# fig.update_layout(
+#     width=1000,
+#     height=500,
+#     autosize=False,
+#     margin=dict(t=0, b=0, l=0, r=0),
+#     template="plotly_dark"
+# )
+
+  
+    
+# fig.update_layout(
+#     xaxis=dict(
+#         rangeselector=dict(
+#             buttons=list([
+#                 dict(count=7,
+#                      label="1w",
+#                      step="day",
+#                      stepmode="backward",
+#                     visible=True),
+#                 dict(count=14,
+#                      label="2w",
+#                      step="day",
+#                      stepmode="backward",
+#                     visible=True),
+#                 dict(count=1,
+#                      label="1m",
+#                      step="month",
+#                      stepmode="backward",
+#                     visible=True),
+#                 dict(count=6,
+#                      label="6m",
+#                      step="month",
+#                      stepmode="backward",
+#                     visible=True),
+#                 dict(count=1,
+#                      label="YTD",
+#                      step="year",
+#                      stepmode="todate",
+#                     visible=True),
+#                 dict(count=1,
+#                      label="1y",
+#                      step="year",
+#                      stepmode="backward",
+#                     visible=True),
+#                 dict(step="all")
+#             ])
+ 
+#         ),
+#         rangeslider=dict(
+#             visible=True
+# #             ,bgcolor= 'darkred'
+#         ),
+        
+#         type="date"
+#     ),
+# template="plotly_dark",
+# xaxis_rangeselector_font_color='black',
+# xaxis_rangeselector_activecolor='red',
+# xaxis_rangeselector_bgcolor='green',
+# )
+# fig.update_xaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
+# fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
+
+
+
+
 # Creating a metrics dataframe to have metrics cards for weekly difference in averages
 metrics = df.tail(14)
 
@@ -180,10 +331,13 @@ col4.metric(label="BMR (KCAL)",
 
 
 st.subheader("Metrics card testing features")
-st.plotly_chart(fig1)
-st.subheader("Trend on Weight data")
-st.plotly_chart(fig)
-
+st.plotly_chart(fig1
+#                 , use_container_width=True
+               )
+st.subheader("Trend on Health Markers")
+st.plotly_chart(fig
+#                 , use_container_width=True
+               )
 
 
 
