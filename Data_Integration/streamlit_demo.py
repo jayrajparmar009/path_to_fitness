@@ -11,27 +11,102 @@ final_df = pd.read_csv("s3://healthmarkers/final_df.csv",
                    storage_options={"anon": False})
 
 
+
+st.set_page_config(page_title='Personal Health Marker Report',  layout='wide', page_icon='🏋️‍♂️')
+
 # Filtering file for desired date range
 df = final_df[(~final_df.Weightkg.isnull()) & (final_df.date_range > '2021-08-01')]
 
 
+df_linechart = df[['date_range',
+                   'Weightkg','Weightkg_rolling_7',
+                   'BMI','BMI_rolling_7',
+                   'Body_Fat%','Body_Fat%_rolling_7',
+                   'Fat-free_Body_Weightkg','Fat-free_Body_Weightkg_rolling_7',
+                   'Subcutaneous_Fat%','Subcutaneous_Fat%_rolling_7',
+                   'Visceral_Fat','Visceral_Fat_rolling_7', 
+                   'Body_Water%','Body_Water%_rolling_7',
+                   'Skeletal_Muscle%','Skeletal_Muscle%_rolling_7',
+                   'Muscle_Masskg','Muscle_Masskg_rolling_7',
+                   'Bone_Masskg','Bone_Masskg_rolling_7',
+                   'Protein%','Protein%_rolling_7',
+                   'BMRkcal','BMRkcal_rolling_7',
+                   'Metabolic_Age','Metabolic_Age_rolling_7']]
 
-fig = go.Figure()
-# Create and style traces
-fig.add_trace(go.Scatter(x=df['date_range'], 
-                         y=df['Weightkg'], name='Weight Trend',
-                         line=dict(color='green', width=2)))
 
-fig.add_trace(go.Scatter(x=df['date_range'], 
-                         y=df['Weightkg_rolling_7'], 
-                         name='7 day Rolling Weight Average',
-                         line=dict(color='royalblue', width=2)))
+maps = {
+        'Weightkg': ['Weightkg','Weightkg_rolling_7'],
+        'BMI':['BMI','BMI_rolling_7'],
+        'BodyFat': ['Body_Fat%','Body_Fat%_rolling_7'],
+        'FatFree_BodyWeight':['Fat-free_Body_Weightkg','Fat-free_Body_Weightkg_rolling_7'],
+        'Subcutaneous_Fat%':['Subcutaneous_Fat%','Subcutaneous_Fat%_rolling_7'],
+        'VisceralFat':['Visceral_Fat','Visceral_Fat_rolling_7'],
+        'BodyWater%':['Body_Water%','Body_Water%_rolling_7'],
+        'SkeletalMuscle%':['Skeletal_Muscle%','Skeletal_Muscle%_rolling_7'],
+        'MuscleMassKg':['Muscle_Masskg','Muscle_Masskg_rolling_7'],
+        'BoneMassKg':['Bone_Masskg','Bone_Masskg_rolling_7'],
+        'Protien%':['Protein%','Protein%_rolling_7'],
+        'BMRKcal':['BMRkcal','BMRkcal_rolling_7'],
+        'Metabolic_Age':['Metabolic_Age','Metabolic_Age_rolling_7']
+       
+       }
+
+
+# plotly figure
+fig = px.line(df_linechart, x=df_linechart.date_range, y = df_linechart.columns[1:], markers=True,
+              facet_row_spacing=0.5, facet_col_spacing=0.5) 
+
+# groups and trace visibilities
+group = []
+vis = []
+visList = []
+for m in maps.keys():
+    for col in df_linechart.columns[1:]:
+        if col in maps[m]:
+            vis.append(True)
+        else:
+            vis.append(False)
+    group.append(m)
+    visList.append(vis)
+    vis = []
+    
+    
+
+# buttons for each group
+buttons = []
+for i, g in enumerate(group):
+    button =  dict(label=g,
+                   method = 'restyle',
+                    args = ['visible',visList[i]])
+    buttons.append(button)
+
+buttons = [{'label': 'all',
+                 'method': 'restyle',
+                 'args': ['visible', [True, True, True, True, True, True]]}] + buttons
+
+
+
+# update layout with buttons                       
+fig.update_layout(
+    updatemenus=[
+        dict(
+        type="dropdown",
+        direction="down",
+        buttons = buttons,
+        bgcolor='white',
+        font={'color':'black'},
+        borderwidth=2,
+        bordercolor='Grey')
+    ],
+    xaxis_title="Dates",
+    yaxis_title="Units",
+)
 
 fig.update_layout(
-    width=1000,
-    height=500,
-    autosize=False,
-    margin=dict(t=0, b=0, l=0, r=0),
+    width=1400,
+    height=650,
+    autosize=True,
+    margin=dict(t=0, b=0, l=10, r=20),
     template="plotly_dark"
 )
 
@@ -42,42 +117,48 @@ fig.update_layout(
         rangeselector=dict(
             buttons=list([
                 dict(count=7,
-                     label="1w",
+                     label="1 Week",
                      step="day",
                      stepmode="backward",
-                    visible=True),
+                    visible=True,
+                    ),
                 dict(count=14,
-                     label="2w",
+                     label="2 Week",
                      step="day",
                      stepmode="backward",
                     visible=True),
                 dict(count=1,
-                     label="1m",
+                     label="1 Month",
                      step="month",
                      stepmode="backward",
                     visible=True),
                 dict(count=6,
-                     label="6m",
+                     label="6 Months",
                      step="month",
                      stepmode="backward",
                     visible=True),
                 dict(count=1,
-                     label="YTD",
+                     label="Year To Date",
                      step="year",
                      stepmode="todate",
                     visible=True),
                 dict(count=1,
-                     label="1y",
+                     label="1 Year",
                      step="year",
                      stepmode="backward",
                     visible=True),
-                dict(step="all")
-            ])
- 
+                dict(step="all"),
+                 
+            ]),
+            
+            
+            
         ),
+       
+        
         rangeslider=dict(
             visible=True,
-            bgcolor= 'darkred'
+            bgcolor= 'lightgrey'
         ),
         
         type="date"
@@ -85,8 +166,9 @@ fig.update_layout(
 template="plotly_dark",
 xaxis_rangeselector_font_color='black',
 xaxis_rangeselector_activecolor='red',
-xaxis_rangeselector_bgcolor='green',
+xaxis_rangeselector_bgcolor='green'
 )
+
 fig.update_xaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
 fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
 
