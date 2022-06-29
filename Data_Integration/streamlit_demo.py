@@ -117,13 +117,16 @@ fig1.update_layout(
                          }})
 
 
+# Metrics df
+metrics = df.tail(14)
+
 
 # Title
 st.title("Healthmarker Tracker")
 
 
 
-
+st.markdown("<i> All the KPIs are calculated and compared against last week's average values", unsafe_allow_html=True)
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric(label="Steps", 
@@ -142,13 +145,12 @@ col3.metric(label="Weight (Kg)",
 col4.metric(label="BMR (KCAL)",
             value=round(metrics.tail(7)['BMRkcal'].mean(),2), 
             delta=round(metrics.tail(7)['BMRkcal'].mean() - metrics.head(7)['BMRkcal'].mean(),2))
-
-
-st.subheader("Metrics card testing features")
-st.plotly_chart(fig1)
-st.subheader("Trend on Weight data")
-st.plotly_chart(fig)
-
+# components.html("""<hr style="height:10px;border:none;color:#333;background-color:#333;"/> """)
+st.markdown("""<hr style="height:10px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)            
+st.subheader("Trend on Health Markers")
+st.plotly_chart(fig
+#                 , use_container_width=True
+               )
 
 
 

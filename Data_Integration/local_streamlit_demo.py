@@ -15,6 +15,7 @@ import os
 # from Weight_data import weight_data as wd
 # from Samsung_health import samsung as sm
 
+import streamlit.components.v1 as components
 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -39,7 +40,7 @@ import streamlit as st
 
 # reading dataframe
 
-
+st.set_page_config(page_title='Personal Health Marker Report',  layout='wide', page_icon='🏋️‍♂️')
 final_df = pd.read_csv('/Users/jayrajparmar/Documents/side_project/health_data_tracking/final_df.csv')
 
 # # Plotly Charts
@@ -86,7 +87,8 @@ maps = {
 
 
 # plotly figure
-fig = px.line(df_linechart, x=df_linechart.date_range, y = df_linechart.columns[1:]) 
+fig = px.line(df_linechart, x=df_linechart.date_range, y = df_linechart.columns[1:], markers=True,
+              facet_row_spacing=0.5, facet_col_spacing=0.5) 
 
 # groups and trace visibilities
 group = []
@@ -130,13 +132,15 @@ fig.update_layout(
         borderwidth=2,
         bordercolor='Grey')
     ],
+    xaxis_title="Dates",
+    yaxis_title="Units",
 )
 
 fig.update_layout(
-    width=1000,
-    height=500,
-    autosize=False,
-    margin=dict(t=0, b=0, l=0, r=0),
+    width=1400,
+    height=650,
+    autosize=True,
+    margin=dict(t=0, b=0, l=10, r=20),
     template="plotly_dark"
 )
 
@@ -147,42 +151,48 @@ fig.update_layout(
         rangeselector=dict(
             buttons=list([
                 dict(count=7,
-                     label="1w",
+                     label="1 Week",
                      step="day",
                      stepmode="backward",
-                    visible=True),
+                    visible=True,
+                    ),
                 dict(count=14,
-                     label="2w",
+                     label="2 Week",
                      step="day",
                      stepmode="backward",
                     visible=True),
                 dict(count=1,
-                     label="1m",
+                     label="1 Month",
                      step="month",
                      stepmode="backward",
                     visible=True),
                 dict(count=6,
-                     label="6m",
+                     label="6 Months",
                      step="month",
                      stepmode="backward",
                     visible=True),
                 dict(count=1,
-                     label="YTD",
+                     label="Year To Date",
                      step="year",
                      stepmode="todate",
                     visible=True),
                 dict(count=1,
-                     label="1y",
+                     label="1 Year",
                      step="year",
                      stepmode="backward",
                     visible=True),
-                dict(step="all")
-            ])
- 
+                dict(step="all"),
+                 
+            ]),
+            
+            
+            
         ),
+       
+        
         rangeslider=dict(
             visible=True,
-            bgcolor= 'darkred'
+            bgcolor= 'lightgrey'
         ),
         
         type="date"
@@ -190,8 +200,9 @@ fig.update_layout(
 template="plotly_dark",
 xaxis_rangeselector_font_color='black',
 xaxis_rangeselector_activecolor='red',
-xaxis_rangeselector_bgcolor='green',
+xaxis_rangeselector_bgcolor='green'
 )
+
 fig.update_xaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
 fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
 
@@ -283,24 +294,24 @@ fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black',
 metrics = df.tail(14)
 
 
-fig1 = go.Figure()
+# fig1 = go.Figure()
 
 
-fig1.add_trace(go.Indicator(
-    value = metrics['count'].tail(7).mean(),
-    delta = {'reference': 6000},
-    gauge = {
-        'axis': {'visible': True}},
-    domain = {'row': 0, 'column': 0}))
+# fig1.add_trace(go.Indicator(
+#     value = metrics['count'].tail(7).mean(),
+#     delta = {'reference': 6000},
+#     gauge = {
+#         'axis': {'visible': True}},
+#     domain = {'row': 0, 'column': 0}))
 
 
-fig1.update_layout(
-    grid = {'rows': 1, 'columns': 1, 'pattern': "independent"},
-    template = {'data' : {'indicator': [{
-        'title': {'text': "Weekly Average Steps"},
-        'mode' : "number+delta+gauge",
-        'delta' : {'reference': 90}}]
-                         }})
+# fig1.update_layout(
+#     grid = {'rows': 1, 'columns': 1, 'pattern': "independent"},
+#     template = {'data' : {'indicator': [{
+#         'title': {'text': "Weekly Average Steps"},
+#         'mode' : "number+delta+gauge",
+#         'delta' : {'reference': 90}}]
+#                          }})
 
 
 
@@ -309,7 +320,7 @@ st.title("Healthmarker Tracker")
 
 
 
-
+st.markdown("<i> All the KPIs are calculated and compared against last week's average values", unsafe_allow_html=True)
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric(label="Steps", 
@@ -328,12 +339,27 @@ col3.metric(label="Weight (Kg)",
 col4.metric(label="BMR (KCAL)",
             value=round(metrics.tail(7)['BMRkcal'].mean(),2), 
             delta=round(metrics.tail(7)['BMRkcal'].mean() - metrics.head(7)['BMRkcal'].mean(),2))
+# components.html("""<hr style="height:10px;border:none;color:#333;background-color:#333;"/> """)
+st.markdown("""<hr style="height:10px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)
 
+# st.subheader("Metrics card testing features")
 
-st.subheader("Metrics card testing features")
-st.plotly_chart(fig1
+# p1, p2, p3, p4 = st.columns([1,1,1,1]) 
+# p1.plotly_chart(fig1
 #                 , use_container_width=True
-               )
+#                )
+# p2.metric(label="Body Fat%",
+#             value=round(metrics.tail(7)['Body_Fat%'].mean(),2),
+#             delta=round(metrics.tail(7)['Body_Fat%'].mean() - metrics.head(7)['Body_Fat%'].mean(), 2))
+            
+            
+# p3.metric(label="Weight (Kg)",
+#             value=round(metrics.tail(7)['Weightkg'].mean(),2), 
+#             delta=round(metrics.tail(7)['Weightkg'].mean() - metrics.head(7)['Weightkg'].mean(),2))
+
+# p4.metric(label="BMR (KCAL)",
+#             value=round(metrics.tail(7)['BMRkcal'].mean(),2), 
+#             delta=round(metrics.tail(7)['BMRkcal'].mean() - metrics.head(7)['BMRkcal'].mean(),2))            
 st.subheader("Trend on Health Markers")
 st.plotly_chart(fig
 #                 , use_container_width=True
