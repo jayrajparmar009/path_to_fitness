@@ -11,7 +11,7 @@ Objetive of this product was to get data across various platforms <b>(Data Inges
 
 <p>Initially whenever you start working on a data project, try to think of an end goal or an objective that you want to achieve from the project. My objective was to build an interface that can help me track my health markers on a regular basis. There are certain health markers that I'd track to see if I am on a right journey i.e. Weight(Kg), BodyFat, BodyWater%, SkeletalMuscle%, BMR.</p>
 
-<p>I had been collecting data over 4 different data sources as listed below, so I started gathering data from each one of them and thinking if it can be automated, answer to my question was <b>no<b> since for some of them had no api, so it would have to be a manual pull always.</p>
+<p>I had been collecting data over 4 different data sources as listed below, so I started gathering data from each one of them and thinking if it can be automated, answer to my question was <b>no</b> since for some of them had no api, so it would have to be a manual pull always.</p>
 
 Below are the data sources which would be used for getting data
 
