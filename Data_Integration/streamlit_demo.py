@@ -205,7 +205,8 @@ metrics = df.tail(14)
 
 # Title
 # st.title("Healthmarker Tracker")
-st.markdown("<h1 style='text-align: center; color: white;'>Healthmarker Tracker</h1>", unsafe_allow_html=True)
+st.title("Healthmarker")
+# st.markdown("<h1 style='text-align: center; color: white;'>Healthmarker Tracker</h1>", unsafe_allow_html=True)
 
 
 
