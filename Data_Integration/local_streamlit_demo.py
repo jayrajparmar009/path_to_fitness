@@ -19,7 +19,7 @@ import streamlit.components.v1 as components
 
 import plotly.express as px
 import plotly.graph_objects as go
-
+import hydralit_components as hc
 
 import streamlit as st
 
@@ -142,6 +142,7 @@ fig.update_layout(
     autosize=True,
     margin=dict(t=0, b=0, l=10, r=20),
     template="plotly_dark"
+    
 )
 
   
@@ -203,8 +204,8 @@ xaxis_rangeselector_activecolor='red',
 xaxis_rangeselector_bgcolor='green'
 )
 
-fig.update_xaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
-fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black')
+fig.update_xaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black', title_font=dict(size=30))
+fig.update_yaxes(showline=False, showgrid=False, linewidth=2, linecolor='black', gridcolor='black', title_font=dict(size=30))
 
 
 
@@ -341,6 +342,35 @@ col4.metric(label="BMR (KCAL)",
             delta=round(metrics.tail(7)['BMRkcal'].mean() - metrics.head(7)['BMRkcal'].mean(),2))
 # components.html("""<hr style="height:10px;border:none;color:#333;background-color:#333;"/> """)
 st.markdown("""<hr style="height:10px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)
+
+
+cc = st.columns(4)
+
+with cc[0]:
+    
+ # can just use 'good', 'bad', 'neutral' sentiment to auto color the card
+    hc.info_card(title='Some heading GOOD', content='All good!', sentiment='good',bar_value=55,
+                theme_override={'bgcolor': '#EFF8F7','title_color': '#2A4657','content_color': 'green','progress_color': 'green','icon_color': 'black', 'icon': "fa-regular fa-user"})
+
+with cc[1]:
+    hc.info_card(title='Some BAD BAD', content='This is really bad',bar_value=12, sentiment='bad'
+#                  ,theme_override=theme_bad
+                )
+
+with cc[2]:
+    hc.info_card(title='Some NEURAL', content='Oh yeah, sure.', sentiment='neutral',bar_value=55)
+
+with cc[3]:
+ #customise the the theming for a neutral content
+    hc.info_card(title='Some NEURAL',content='Maybe...',key='sec',bar_value=5, sentiment='neutral'
+#                  ,theme_override=theme_neutral
+                )
+
+
+st.markdown("""<hr style="height:10px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)
+
+
+st.markdown("<i> Chart below is used to view the trend of health markers since none of those health marker collection technique is accurate; Hence please select individual option from dropdown", unsafe_allow_html=True)
 
 # st.subheader("Metrics card testing features")
 

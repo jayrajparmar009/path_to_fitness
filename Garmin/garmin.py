@@ -5,13 +5,16 @@ import os
 from datetime import date, timedelta, datetime
 import sys
 sys.path.insert(1,  os.path.abspath('..'))
+print(os.getcwd())
 import basic_methods as bm
 import time
 
 
 def df_read():
+    print(os.getcwd())
     f = open(os.path.join(os.path.dirname('Garmin/garmin_summarized.json'), 
                       'garmin_summarized.json'))
+    
     data = json.loads(f.read())
     json_data = data[0]['summarizedActivitiesExport']
     lis = []
