@@ -41,8 +41,14 @@ Below are the data sources which would be used for getting data
   
 
 <h2>Execution</h2>
-<p> A typical data source file structure is shown below:
-  
+<p> Here is the data flow structure for understanding it </p>
+
+
+<p align="center">
+  <img src=https://github.com/jayrajparmar009/path_to_fitness/blob/main/Logos/flow_pic.png width="1200" height="600" alt="accessibility text">
+</p>
+ 
+ I have structured this project as all the individual data sources would have their own functions for clearning data and it would be stored as a .py script. Those .py scripts would be called as a package in jupyter notebook for each data sources and then create a final stage table for each data sources. Finally all the staged data are being merged to create a master data table and stored on AWS S3, where it would be consumed by streamlit.
 
  
 
