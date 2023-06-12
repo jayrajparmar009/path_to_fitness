@@ -1,0 +1,5 @@
+com.samsung.health.device_profile,6212007,6
+manufacturer,providing_step_goal,step_source_group,device_type,backsync_step_goal,capability,device_group,update_time,create_time,name,model,connectivity_type,deviceuuid,pkg_name,fixed_name,datauuid
+Samsung,,,,,,360001,2022-06-09 02:27:34.545,2019-12-11 21:51:19.886,My Device,SM-G973W,,im26HRLwRA,com.sec.android.app.shealth,Jayraj's S10,91a2762f-c9a7-ee4a-3a6f-f12fc75fa4c1,
+Combined,,,,,,0,2019-12-11 21:51:19.919,2019-12-11 21:51:19.919,Combined,Combined,,VfS0qUERdZ,com.sec.android.app.shealth,Galaxy S10,7af9722c-cd99-07b7-853a-43ce58e819c5,
+all_target,,,,,,0,2019-12-11 21:51:23.591,2019-12-11 21:51:23.591,all_target,all_target,,Mk66SbFqK1,com.sec.android.app.shealth,Galaxy S10,471ca32b-a665-1e9e-7c27-7ac69485dc05,
