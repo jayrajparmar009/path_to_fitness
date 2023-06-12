@@ -5,11 +5,20 @@ import s3fs
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+from io import StringIO
 
 # Reading data file directly from Amazon AWS S3
-final_df = pd.read_csv("s3://healthmarkers/final_df.csv",
-                   storage_options={"anon": False})
+# final_df = pd.read_csv("s3://healthmarkers/final_df.csv",
+#                    storage_options={"anon": False})
 
+
+s3 = s3fs.S3FileSystem(anon=True)
+s3.ls('healthmarkers')
+with s3.open('healthmarkers/final_df.csv', 'rb') as f:
+    byte_s = f.read()
+s=str(byte_s,'utf-8')
+data = StringIO(s)
+final_df=pd.read_csv(data)
 
 
 st.set_page_config(page_title='Personal Health Marker Report',  layout='wide', page_icon='🏋️‍♂️')
