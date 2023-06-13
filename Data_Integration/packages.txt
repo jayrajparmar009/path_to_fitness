@@ -1,3 +1,4 @@
 #packages
 
 plotly-dev
+urllib3 == 1.25.4
