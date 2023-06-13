@@ -5,6 +5,7 @@ import s3fs
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+python -m pip install requests "urllib3<2"
 from io import StringIO
 
 # Reading data file directly from Amazon AWS S3
