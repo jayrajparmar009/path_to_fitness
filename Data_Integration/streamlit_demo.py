@@ -12,17 +12,23 @@ from io import StringIO
 # final_df = pd.read_csv("s3://healthmarkers/final_df.csv",
 #                    storage_options={"anon": False})
 
+from st_files_connection import FilesConnection
+
+# Create connection object and retrieve file contents.
+# Specify input format is a csv and to cache the result for 600 seconds.
+conn = st.experimental_connection('s3', type=FilesConnection)
+final_df = conn.read("healthmarkers/final_df.csv", input_format="csv", ttl=600)
 
 
-s3 = s3fs.S3FileSystem(anon=True)
-s3.ls('healthmarkers')
-with s3.open('healthmarkers/final_df.csv', 'rb') as f:
-    byte_s = f.read()
+# s3 = s3fs.S3FileSystem(anon=True)
+# s3.ls('healthmarkers')
+# with s3.open('healthmarkers/final_df.csv', 'rb') as f:
+#     byte_s = f.read()
 
-s=str(byte_s,'utf-8')
+# s=str(byte_s,'utf-8')
 
-data = StringIO(s)
-final_df=pd.read_csv(data)
+# data = StringIO(s)
+# final_df=pd.read_csv(data)
 
 
 
