@@ -2,4 +2,5 @@
 
 s3fs==2022.5.0
 plotly==5.8.2
-urllib3 == 1.25.4
+# Direct pypi install coming soon
+git+https://github.com/streamlit/files-connection
