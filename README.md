@@ -54,7 +54,7 @@ Below are the data sources which would be used for getting data
 
 Final Data Product can be viewed on the link below:
 
-<src>https://jayrajparmar009-path-to-f-data-integrationstreamlit-demo-cno1b6.streamlit.app/</src>
+<src>https://pathtofitness.streamlit.app/</src>
 
 <kbd>
 <p align="center">
