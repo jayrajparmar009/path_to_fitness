@@ -9,16 +9,16 @@ import streamlit as st
 from io import StringIO
 
 # Reading data file directly from Amazon AWS S3
-# final_df = pd.read_csv("s3://healthmarkers/final_df.csv",
-#                    storage_options={"anon": False})
+final_df = pd.read_csv("s3://newhealthmarker/final_df.csv",
+                   storage_options={"anon": False})
 
-from st_files_connection import FilesConnection
+# from st_files_connection import FilesConnection
 
 # Create connection object and retrieve file contents.
 # Specify input format is a csv and to cache the result for 600 seconds.
 st.set_page_config(page_title='Personal Health Marker Report',  layout='wide', page_icon='🏋️‍♂️')
-conn = st.experimental_connection('s3', type=FilesConnection)
-final_df = conn.read("healthmarkers/final_df.csv", input_format="csv", ttl=600)
+# conn = st.experimental_connection('s3', type=FilesConnection)
+# final_df = conn.read("healthmarkers/final_df.csv", input_format="csv", ttl=600)
 
 
 
